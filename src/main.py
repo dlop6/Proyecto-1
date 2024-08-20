@@ -40,7 +40,7 @@ while True:
         print("Conjuntos disponibles:")
         for i, conjunto in enumerate(conjuntos):
             print(f"Conjunto {i + 1}: {conjunto.name}")
-            print(f"Elementos: {conjunto.buckets}")
+            print(f"Elementos: {conjunto.elementos}")
     
     elif opcion == "3":
         print("Operaciones entre conjuntos.\n1. Unión.\n2. Complemento.\n3. Intersección.\n4. Diferencia.\n5.Diferencia Simétrica")

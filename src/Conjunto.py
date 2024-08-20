@@ -12,17 +12,8 @@ class Conjunto:
         """
         self.name = name
         self.size = size  # Tamaño de la tabla hash
-        self.buckets = [[] for _ in range(size)]  # Lista de listas para los buckets
+        self.elementos = []  # Lista de listas para los buckets
 
-    def hash(self, value):
-        """
-        Implementación de una función hash simple para convertir un valor en un índice de la tabla hash.
-        Esta forma evita colisiones para sets de tamaños pequeños.
-        """
-        if isinstance(value, str):
-            return sum(ord(char) for char in value) % self.size
-        else:
-            return hash(value) % self.size
 
     def add(self, value):
         """
@@ -31,11 +22,8 @@ class Conjunto:
         Parámetros:
         - value: El valor a agregar al conjunto.
         """
-        hash_value = self.hash(value)  # Calcula el valor hash
-        bucket = self.buckets[hash_value]  # Obtiene el bucket correspondiente
-        if value not in bucket:  # Solo agrega si no está presente
-            bucket.append(value)
-
+        if value not in self.elementos:
+            self.elementos.append(value)
 
     def remove(self, value):
         """
@@ -44,11 +32,8 @@ class Conjunto:
         Parámetros:
         - value: El valor a eliminar del conjunto.
         """
-        hash_value = self.hash(value)  # Calcula el valor hash
-        bucket = self.buckets[hash_value]  # Obtiene el bucket correspondiente
-
-        if value in bucket:  # Solo elimina si está presente
-            bucket.remove(value)
+        if value in self.elementos:
+            self.elementos.remove(value)    
 
     def contains(self, value):
         """
@@ -60,24 +45,17 @@ class Conjunto:
         Retorna:
         - bool: True si el valor está en el conjunto, False en caso contrario.
         """
-        hash_value = self.hash(value)  # Calcula el valor hash
-        bucket = self.buckets[hash_value]  # Obtiene el bucket correspondiente
-
-        return value in bucket
+        return value in self.elementos
 
     def __str__(self):
         """
         Retorna una representación en cadena del conjunto.
         
         Retorna:
-        - str: Representación del conjunto como una lista de buckets.
+        - str: Representación del conjunto como una lista de elementos.
         """
-        values = []
-        for bucket in self.buckets:
-            for val in bucket:
-                values.append(val)
-        return str(values)
-
+        return str(self.elementos)
+    
     def __iter__(self):
         """
         Inicializa el iterador para recorrer los elementos del conjunto.
@@ -99,20 +77,21 @@ class Conjunto:
         Lanza:
         - StopIteration: Si no hay más elementos para iterar.
         """
-        while self.current_bucket < self.size:
-            bucket = self.buckets[self.current_bucket]
+        if self.current_bucket >= len(self.elementos):
+            raise StopIteration
 
-            if self.current_index < len(bucket):
-                value = bucket[self.current_index]
-                self.current_index += 1
-                return value
-
+        if self.current_index >= len(self.elementos[self.current_bucket]):
             self.current_bucket += 1
             self.current_index = 0
 
-        raise StopIteration
+        if self.current_bucket >= len(self.elementos):
+            raise StopIteration
 
-    def union(self, other):
+        value = self.elementos[self.current_bucket][self.current_index]
+        self.current_index += 1
+        return value
+
+    def union(self, other: 'Conjunto') -> 'Conjunto':
         """
         Realiza la unión de este conjunto con otro conjunto.
 
@@ -125,18 +104,17 @@ class Conjunto:
         union_size = self.size + self.complemento(other).size
         new_set = Conjunto(union_size -1, "Union")
 
-        # Agrega todos los elementos de este conjunto al nuevo conjunto
-        for value in self:
+        for value in self.elementos:
             new_set.add(value)
-
-        # Agrega los elementos del otro conjunto que no están en el nuevo conjunto
-        for value in other:
-            if not new_set.contains(value):
+            
+        for value in other.elementos:
+            if not self.contains(value):
                 new_set.add(value)
-
+        
         return new_set
-
-    def complemento(self, other):
+            
+        
+    def complemento(self, other: 'Conjunto') -> 'Conjunto':
         """
         Realiza el complemento de este conjunto con otro conjunto.
 
@@ -147,16 +125,17 @@ class Conjunto:
         - Conjunto: Un nuevo conjunto que es el complemento (diferencia) de ambos conjuntos.
         """
         reference_list = []
-        for value in other:
-            if not self.contains(value):
+        
+        for value in self.elementos:
+            if not other.contains(value):
                 reference_list.append(value)
-
+        
         new_set = Conjunto(len(reference_list), "Complemento")
-
-        # Agrega los elementos de este conjunto que no están en el otro conjunto
         for value in reference_list:
             new_set.add(value)
-
+            
+            
+        
         return new_set
     
     def interseccion(self, other):
@@ -200,38 +179,3 @@ class Conjunto:
         return new_set
 
 
-# # main
-
-# # Crea dos conjuntos
-set1 = Conjunto(4, "A")
-# set2 = Conjunto(3, "B")
-
-# # Agrega elementos a los conjuntos
-
-set1.add('1')
-set1.add('0')
-set1.add('x')
-set1.add('y')
-
-# set2.add(3)
-# set2.add(4)
-# set2.add(5)
-
-# # Muestra los conjuntos
-# print(set1)
-# print(set2)
-
-# # Realiza la unión de los conjuntos
-# union_set = set1.union(set2)
-# print(union_set)
-
-
-# # Realiza el complemento de los conjuntos
-# complemento_set = set1.complemento(set2)
-
-# print(complemento_set)
-
-# # Itera sobre los elementos del conjunto
-# for value in set1:
-#     print(value)
-    
