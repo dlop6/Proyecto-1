@@ -57,7 +57,15 @@ while True:
                 complemento = conjunto1.complemento(conjunto2)
                 print(f"Complemento de {conjunto1.name} y {conjunto2.name}: {complemento}")
 
-            # Implement additional operations here...
+            elif operacion == "3":
+                pass
+            
+            elif operacion == "4":
+                pass
+            
+            elif operacion == "5":
+                pass
+            
         else:
             print("Opción inválida. Inténtelo de nuevo.")
     elif opcion == "4":
