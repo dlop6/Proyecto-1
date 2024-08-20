@@ -3,27 +3,29 @@ class Conjunto:
     Clase que implementa un conjunto utilizando una tabla hash con listas enlazadas para manejar colisiones.
     """
 
-    def __init__(self, size) -> None:
+    def __init__(self, size, name) -> None:
         """
         Inicializa el conjunto con una tabla hash de un tamaño dado.
         
         Parámetros:
         - size (int): Tamaño de la tabla hash (número de buckets).
         """
+        self.name = name
         self.size = size  # Tamaño de la tabla hash
         self.buckets = [[] for _ in range(size)]  # Lista de listas para los buckets
 
     def hash(self, value):
         """
-        Calcula el valor hash para un elemento.
-
-        Parámetros:
-        - value: El valor a calcular el hash.
-
-        Retorna:
-        - int: El índice del bucket donde se almacenará el valor.
+        Implementación de una función hash simple para convertir un valor en un índice de la tabla hash.
+        Esta forma evita colisiones para sets de tamaños pequeños.
         """
-        return hash(value) % self.size
+        if isinstance(value, str):
+            return sum(ord(char) for char in value) % self.size
+        elif isinstance(value, int):
+            return value % self.size
+        else:
+            return hash(value) % self.size
+
 
     def add(self, value):
         """
@@ -119,7 +121,8 @@ class Conjunto:
         Retorna:
         - Conjunto: Un nuevo conjunto que es la unión de ambos conjuntos.
         """
-        new_set = Conjunto(self.size)
+        union_size = self.size + self.complemento(other).size
+        new_set = Conjunto(union_size -1, "Union")
 
         # Agrega todos los elementos de este conjunto al nuevo conjunto
         for value in self:
@@ -142,7 +145,7 @@ class Conjunto:
         Retorna:
         - Conjunto: Un nuevo conjunto que es el complemento (diferencia) de ambos conjuntos.
         """
-        new_set = Conjunto(self.size)
+        new_set = Conjunto(self.size, "Complemento")
 
         # Agrega los elementos de este conjunto que no están en el otro conjunto
         for value in self:
@@ -150,3 +153,39 @@ class Conjunto:
                 new_set.add(value)
 
         return new_set
+
+
+# # main
+
+# # Crea dos conjuntos
+# set1 = Conjunto(3, "A")
+# set2 = Conjunto(3, "B")
+
+# # Agrega elementos a los conjuntos
+
+# set1.add(1)
+# set1.add(2)
+# set1.add(3)
+
+# set2.add(3)
+# set2.add(4)
+# set2.add(5)
+
+# # Muestra los conjuntos
+# print(set1)
+# print(set2)
+
+# # Realiza la unión de los conjuntos
+# union_set = set1.union(set2)
+# print(union_set)
+
+
+# # Realiza el complemento de los conjuntos
+# complemento_set = set1.complemento(set2)
+
+# print(complemento_set)
+
+# # Itera sobre los elementos del conjunto
+# for value in set1:
+#     print(value)
+    
