@@ -1,0 +1,5 @@
+# Ignore compiled Python files
+*.pyc
+
+# Specifically ignore Conjunto.cpython-312.pyc in the src/__pycache__/ directory
+src/__pycache__/Conjunto.cpython-312.pyc
