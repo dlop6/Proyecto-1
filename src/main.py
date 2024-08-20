@@ -2,10 +2,20 @@ from Conjunto import Conjunto
 
 
 conjuntos = []
+u = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+universo = Conjunto(len(u), "U")
+for value in u:
+    universo.add(value)
+
+conjuntos.append(universo)
 
 while True:
+    
+
     print("Bienvenido al programa de conjuntos.\n1. Crear un conjunto.\n2. Ver todos los conjuntos disponibles.\n3. Operaciones entre conjuntos.\n4. Salir.")
     
+
+
     opcion = input("Ingrese la opción que desea realizar: ")
 
     if opcion == "1":
@@ -35,10 +45,10 @@ while True:
             print(f"Elementos: {conjunto.buckets}")
     
     elif opcion == "3":
-        print("Operaciones entre conjuntos.\n1. Unión.\n2. Complemento.\n3. Intersección.\n4. Diferencia.\n5.Diferencia Simétrica")
+        print("Operaciones entre conjuntos.\n1. Unión.\n2. Intersección.\n3. Diferencia.\n4. Diferencia Simétrica.\n5. Complemento")
         operacion = input("Ingrese la operación que desea realizar: ")
         
-        if operacion in ["1", "2", "3", "4", "5"]:
+        if operacion in ["1", "2", "3", "4"]:
             conjunto1_name = input("Ingrese el nombre del primer conjunto: ")
             conjunto2_name = input("Ingrese el nombre del segundo conjunto: ")
 
@@ -51,21 +61,30 @@ while True:
 
             if operacion == "1":
                 union = conjunto1.union(conjunto2)
-                print(f"Unión de {conjunto1.name} y {conjunto2.name}: {union}")
-                
-            elif operacion == "2":
-                complemento = conjunto1.complemento(conjunto2)
-                print(f"Complemento de {conjunto1.name} y {conjunto2.name}: {complemento}")
+                print(f"Unión de {conjunto1.name} y {conjunto2.name}: {union}")            
 
+            elif operacion == "2":
+                interseccion = conjunto1.interseccion(conjunto2)
+                print(f"Intersección de {conjunto1.name} y {conjunto2.name}: {interseccion}")
+            
             elif operacion == "3":
-                pass
+                diferencia = conjunto1.diferencia(conjunto2)
+                print(f"Diferencia de {conjunto1.name} y {conjunto2.name}: {diferencia}")
             
             elif operacion == "4":
-                pass
+                diferencia_simetrica = conjunto1.diferencia_simetrica(conjunto2)
+                print(f"Diferencia Simétrica de {conjunto1.name} y {conjunto2.name}: {diferencia_simetrica}")
             
-            elif operacion == "5":
-                pass
-            
+        elif operacion == "5":
+            conjunto1_name = input("Ingrese el nombre del primer conjunto: ")
+            conjunto1 = next((c for c in conjuntos if c.name == conjunto1_name), None)
+
+            if not conjunto1:
+                print("Uno o ambos conjuntos no fueron encontrados.")
+                continue
+
+            complemento = conjunto1.complemento(universo)
+            print(f"Complemento de {conjunto1.name} y {universo.name}: {complemento}")
         else:
             print("Opción inválida. Inténtelo de nuevo.")
     elif opcion == "4":
