@@ -29,7 +29,7 @@ while True:
             for i in range(size):
                 elemento = input(f"\nIngrese el elemento {i + 1}: ")
                 if elemento.isalnum():  
-                    conjunto.add(elemento)
+                    conjunto.add(elemento.lower())
                 else:
                     print("Elemento inválido.")
             
@@ -42,7 +42,7 @@ while True:
         print("Conjuntos disponibles:")
         for i, conjunto in enumerate(conjuntos):
             print(f"Conjunto {i + 1}: {conjunto.name}")
-            print(f"Elementos: {conjunto.buckets}")
+            print(f"Elementos: {conjunto.__str__()}")
     
     elif opcion == "3":
         print("Operaciones entre conjuntos.\n1. Unión.\n2. Intersección.\n3. Diferencia.\n4. Diferencia Simétrica.\n5. Complemento")
@@ -61,19 +61,19 @@ while True:
 
             if operacion == "1":
                 union = conjunto1.union(conjunto2)
-                print(f"Unión de {conjunto1.name} y {conjunto2.name}: {union}")            
+                print(f"Unión de {conjunto1.name} y {conjunto2.name}: {union.__str__()}")            
 
             elif operacion == "2":
                 interseccion = conjunto1.interseccion(conjunto2)
-                print(f"Intersección de {conjunto1.name} y {conjunto2.name}: {interseccion}")
+                print(f"Intersección de {conjunto1.name} y {conjunto2.name}: {interseccion.__str__()}")
             
             elif operacion == "3":
                 diferencia = conjunto1.diferencia(conjunto2)
-                print(f"Diferencia de {conjunto1.name} y {conjunto2.name}: {diferencia}")
+                print(f"Diferencia de {conjunto1.name} y {conjunto2.name}: {diferencia.__str__()}")
             
             elif operacion == "4":
                 diferencia_simetrica = conjunto1.diferencia_simetrica(conjunto2)
-                print(f"Diferencia Simétrica de {conjunto1.name} y {conjunto2.name}: {diferencia_simetrica}")
+                print(f"Diferencia Simétrica de {conjunto1.name} y {conjunto2.name}: {diferencia_simetrica.__str__()}")
             
         elif operacion == "5":
             conjunto1_name = input("Ingrese el nombre del primer conjunto: ")
@@ -84,7 +84,7 @@ while True:
                 continue
 
             complemento = conjunto1.complemento(universo)
-            print(f"Complemento de {conjunto1.name} y {universo.name}: {complemento}")
+            print(f"Complemento de {conjunto1.name} y {universo.name}: {complemento.__str__()}")
         else:
             print("Opción inválida. Inténtelo de nuevo.")
     elif opcion == "4":

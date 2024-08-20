@@ -21,11 +21,8 @@ class Conjunto:
         """
         if isinstance(value, str):
             return sum(ord(char) for char in value) % self.size
-        elif isinstance(value, int):
-            return value % self.size
         else:
             return hash(value) % self.size
-
 
     def add(self, value):
         """
@@ -36,9 +33,9 @@ class Conjunto:
         """
         hash_value = self.hash(value)  # Calcula el valor hash
         bucket = self.buckets[hash_value]  # Obtiene el bucket correspondiente
-
         if value not in bucket:  # Solo agrega si no está presente
             bucket.append(value)
+
 
     def remove(self, value):
         """
@@ -68,14 +65,18 @@ class Conjunto:
 
         return value in bucket
 
-    def __str__(self) -> str:
+    def __str__(self):
         """
         Retorna una representación en cadena del conjunto.
         
         Retorna:
         - str: Representación del conjunto como una lista de buckets.
         """
-        return str(self.buckets)
+        values = []
+        for bucket in self.buckets:
+            for val in bucket:
+                values.append(val)
+        return str(values)
 
     def __iter__(self):
         """
@@ -225,14 +226,15 @@ class Conjunto:
 # # main
 
 # # Crea dos conjuntos
-set1 = Conjunto(3, "A")
+set1 = Conjunto(4, "A")
 # set2 = Conjunto(3, "B")
 
 # # Agrega elementos a los conjuntos
 
-set1.add(1)
-set1.add(2)
-set1.add(3)
+set1.add('1')
+set1.add('0')
+set1.add('x')
+set1.add('y')
 
 # set2.add(3)
 # set2.add(4)
