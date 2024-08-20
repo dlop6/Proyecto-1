@@ -154,7 +154,6 @@ class Conjunto:
 
         return new_set
 
-
 # # main
 
 # # Crea dos conjuntos

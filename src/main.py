@@ -4,6 +4,7 @@ from Conjunto import Conjunto
 conjuntos = []
 
 while True:
+    print ("="*40)
     print("Bienvenido al programa de conjuntos.\n1. Crear un conjunto.\n2. Ver todos los conjuntos disponibles.\n3. Operaciones entre conjuntos.\n4. Salir.")
     
     opcion = input("Ingrese la opción que desea realizar: ")
@@ -31,12 +32,13 @@ while True:
     elif opcion == "2":
         print("Conjuntos disponibles:")
         for i, conjunto in enumerate(conjuntos):
-            print(f"Conjunto {i + 1}: {conjunto.name}")
+            print("-"*40)
+            print(f"Conjunto : {conjunto.name}")
             print(f"Elementos: {conjunto.buckets}")
     
     elif opcion == "3":
         print("Operaciones entre conjuntos.\n1. Unión.\n2. Complemento.\n3. Intersección.\n4. Diferencia.\n5.Diferencia Simétrica")
-        operacion = input("Ingrese la operación que desea realizar: ")
+        operacion = input("Ingrese la operación que desea realizar:\n")
         
         if operacion in ["1", "2", "3", "4", "5"]:
             conjunto1_name = input("Ingrese el nombre del primer conjunto: ")
