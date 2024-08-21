@@ -126,8 +126,8 @@ class Conjunto:
         """
         reference_list = []
         
-        for value in self.elementos:
-            if not other.contains(value):
+        for value in other.elementos:
+            if not self.contains(value):
                 reference_list.append(value)
         
         new_set = Conjunto(len(reference_list), "Complemento")
@@ -178,4 +178,28 @@ class Conjunto:
             new_set.add(value)
         return new_set
 
+    def diferencia_simetrica(self, other):
+            """
+            Realiza la diferencia simetrica de este conjunto con otro conjunto.
+
+            Parámetros:
+            - other (Conjunto): Otro conjunto para calcular la diferencia simetrica.
+
+            Retorna:
+            - Conjunto: Un nuevo conjunto con el resultado de la diferencia simetrica entre este conjunto y el ingresado.
+            """
+
+            reference_list = []
+            for value in self:
+                if not other.contains(value):
+                    reference_list.append(value)
+
+            for value in other:
+                if not self.contains(value):
+                    reference_list.append(value)
+
+            new_set = Conjunto(len(reference_list), "Diferencia")
+            for value in reference_list:
+                new_set.add(value)
+            return new_set
 

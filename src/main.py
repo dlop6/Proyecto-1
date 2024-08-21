@@ -24,10 +24,12 @@ while True:
             conjunto = Conjunto(size, name)
             print("Solo puede ingresar elementos del alfabeto en español y números del 0 al 9.")
             
-            for i in range(size):
+            i = 0
+            while i < size:
                 elemento = input(f"\nIngrese el elemento {i + 1}: ")
                 if elemento.isalnum():  
                     conjunto.add(elemento.lower())
+                    i = i +1
                 else:
                     print("Elemento inválido.")
             
@@ -43,7 +45,7 @@ while True:
             print(f"Elementos: {conjunto.elementos}")
     
     elif opcion == "3":
-        print("Operaciones entre conjuntos.\n1. Unión.\n2. Complemento.\n3. Intersección.\n4. Diferencia.\n5.Diferencia Simétrica")
+        print("Operaciones entre conjuntos.\n1. Unión.\n2. Intersección.\n3. Diferencia.\n4. Diferencia Simétrica.\n5. Complemento")
         operacion = input("Ingrese la operación que desea realizar: ")
         
         if operacion in ["1", "2", "3", "4"]:
@@ -74,11 +76,11 @@ while True:
                 print(f"Diferencia Simétrica de {conjunto1.name} y {conjunto2.name}: {diferencia_simetrica.__str__()}")
             
         elif operacion == "5":
-            conjunto1_name = input("Ingrese el nombre del primer conjunto: ")
+            conjunto1_name = input("Ingrese el nombre del conjunto: ")
             conjunto1 = next((c for c in conjuntos if c.name == conjunto1_name), None)
 
             if not conjunto1:
-                print("Uno o ambos conjuntos no fueron encontrados.")
+                print("El conjunto no fue encontrado.")
                 continue
 
             complemento = conjunto1.complemento(universo)
