@@ -54,7 +54,7 @@ class Conjunto:
         Retorna:
         - str: Representación del conjunto como una lista de elementos.
         """
-        return str(self.elementos)
+        return str(self.elementos).replace("[", "{").replace("]", "}")
     
     def __iter__(self):
         """
