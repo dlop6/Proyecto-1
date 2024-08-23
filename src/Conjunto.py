@@ -1,23 +1,25 @@
 class Conjunto:
     """
-    Clase que implementa un conjunto utilizando una tabla hash con listas enlazadas para manejar colisiones.
+    Clase que implementa un conjunto utilizando listas para almacenar los elementos.
     """
 
     def __init__(self, size, name) -> None:
         """
-        Inicializa el conjunto con una tabla hash de un tamaño dado.
+        Inicializa el conjunto con una lista vacía.
         
         Parámetros:
-        - size (int): Tamaño de la tabla hash (número de buckets).
+        - size (int): Este parámetro ya no afecta directamente la implementación, pero se conserva para futuros usos o referencias.
+        - name (str): El nombre del conjunto.
         """
         self.name = name
-        self.size = size  # Tamaño de la tabla hash
-        self.elementos = []  # Lista de listas para los buckets
+        self.size = size  # Tamaño (referencial) del conjunto
+        self.elementos = []  # Lista para almacenar los elementos del conjunto
 
 
     def add(self, value):
         """
-        Agrega un valor al conjunto si no está presente.
+        Agrega un valor al conjunto si no está presente. Utiliza una lista para
+        almacenar los elementos, y solo agrega el valor si no está ya presente.
 
         Parámetros:
         - value: El valor a agregar al conjunto.
@@ -27,7 +29,8 @@ class Conjunto:
 
     def remove(self, value):
         """
-        Elimina un valor del conjunto si está presente.
+        Elimina un valor del conjunto si está presente. Utiliza una lista y
+        verifica si el valor está contenido antes de eliminarlo.
 
         Parámetros:
         - value: El valor a eliminar del conjunto.
@@ -37,7 +40,7 @@ class Conjunto:
 
     def contains(self, value):
         """
-        Verifica si un valor está en el conjunto.
+        Verifica si un valor está en el conjunto. Busca el valor en la lista de elementos.
 
         Parámetros:
         - value: El valor a verificar.
@@ -50,7 +53,7 @@ class Conjunto:
     def __str__(self):
         """
         Retorna una representación en cadena del conjunto.
-        
+
         Retorna:
         - str: Representación del conjunto como una lista de elementos.
         """
@@ -63,8 +66,7 @@ class Conjunto:
         Retorna:
         - Conjunto: El objeto iterable (self).
         """
-        self.current_bucket = 0  # Índice del bucket actual
-        self.current_index = 0  # Índice dentro del bucket actual
+        self.current_index = 0  # Índice actual dentro de la lista de elementos
         return self
 
     def __next__(self):
@@ -77,17 +79,10 @@ class Conjunto:
         Lanza:
         - StopIteration: Si no hay más elementos para iterar.
         """
-        if self.current_bucket >= len(self.elementos):
+        if self.current_index >= len(self.elementos):
             raise StopIteration
 
-        if self.current_index >= len(self.elementos[self.current_bucket]):
-            self.current_bucket += 1
-            self.current_index = 0
-
-        if self.current_bucket >= len(self.elementos):
-            raise StopIteration
-
-        value = self.elementos[self.current_bucket][self.current_index]
+        value = self.elementos[self.current_index]
         self.current_index += 1
         return value
 
@@ -101,8 +96,8 @@ class Conjunto:
         Retorna:
         - Conjunto: Un nuevo conjunto que es la unión de ambos conjuntos.
         """
-        union_size = self.size + self.complemento(other).size
-        new_set = Conjunto(union_size -1, "Union")
+        union_size = self.size + len(other.elementos)
+        new_set = Conjunto(union_size - 1, "Union")
 
         for value in self.elementos:
             new_set.add(value)
@@ -134,8 +129,6 @@ class Conjunto:
         for value in reference_list:
             new_set.add(value)
             
-            
-        
         return new_set
     
     def interseccion(self, other):
@@ -202,4 +195,3 @@ class Conjunto:
             for value in reference_list:
                 new_set.add(value)
             return new_set
-
